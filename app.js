@@ -846,13 +846,18 @@ function switchScreen(screenName) {
     target.classList.add('active');
   }
 
+  const topHeader = document.querySelector('.top-header');
+  if (topHeader) {
+    topHeader.classList.toggle('view-workspace', screenName === 'workspace');
+  }
+
   // Update header title and search box visibility
   const titleEl = document.getElementById('page-header-title');
   const searchBox = document.getElementById('global-search-container');
   if (titleEl) {
     if (screenName === 'dashboard') {
-      titleEl.textContent = 'HOME PAGE';
-      titleEl.title = 'HOME PAGE';
+      titleEl.textContent = 'PHÒNG VIẾT THƯ B1';
+      titleEl.title = 'PHÒNG VIẾT THƯ B1';
     } else if (screenName === 'history') {
       titleEl.textContent = 'LỊCH SỬ BÀI VIẾT';
       titleEl.title = 'LỊCH SỬ BÀI VIẾT';
