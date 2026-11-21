@@ -6340,7 +6340,7 @@ function evaluateVstepLetter(text, topic) {
   // -------------------------------------------------------------------------
   const avg = (tfBand + orBand + voBand + grBand) / 4;
   const finalScore = Math.round(avg * 2) / 2;
-  const writingContribution = (finalScore * 0.3).toFixed(2);
+  const writingContribution = (finalScore / 3).toFixed(2);
 
   let level = 'Bậc 3 (B1)';
   let levelTitle = `Band ${finalScore.toFixed(1)} - Đạt chuẩn B1 (Bậc 3 VSTEP)`;
@@ -6466,10 +6466,10 @@ function renderEvaluationView(evalResult, userText) {
   const weightScoreEl = document.getElementById('weight-task1-score');
   const weightProgressEl = document.getElementById('vstep-progress-fill');
   if (weightScoreEl) {
-    weightScoreEl.textContent = `${evalResult.writingContribution} / 3.00 điểm`;
+    weightScoreEl.textContent = `${evalResult.writingContribution} / 3.33 điểm`;
   }
   if (weightProgressEl) {
-    const pct = Math.min(100, Math.max(0, (parseFloat(evalResult.writingContribution) / 3.0) * 100));
+    const pct = Math.min(100, Math.max(0, (parseFloat(evalResult.writingContribution) / 3.33) * 100));
     weightProgressEl.style.width = `${pct.toFixed(1)}%`;
   }
 
@@ -6637,6 +6637,10 @@ function renderEvaluationView(evalResult, userText) {
     `;
 
     listEl.innerHTML = tabNavHtml + sentencesContentHtml + rubricContentHtml + modelContentHtml;
+    if (window.VstepAIGrader) {
+      const _p = (state && state.currentTopic && state.currentTopic.prompt) ? state.currentTopic.prompt : '';
+      window.VstepAIGrader.mountSingle(listEl, { taskType: 'task1', targetLevel: 'B1', prompt: _p, essay: userText });
+    }
   }
 }
 
